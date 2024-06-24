@@ -2,11 +2,19 @@
 """
 Hypermedia pagination using Server class
 """
-from typing import List, Dict, Union
+from typing import List, Dict, Union, Tuple
 import math
 from functools import lru_cache
 
 Server = __import__('1-simple_pagination').Server
+
+
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
+    """
+    Returns a tuple of start index and end index
+    for a given pagination parameters.
+    """
+    return (page - 1) * page_size, (page - 1) * page_size + page_size
 
 
 class Server(Server):
@@ -36,7 +44,7 @@ class Server(Server):
             "page_size must be an integer greater than 0"
 
         data_page = self.get_page(page, page_size)
-        total_pages = math.ceil(len(self.__dataset) / page_size)
+        total_pages = math.ceil(len(self.dataset()) / page_size)
 
         next_page = page + 1 if page < total_pages else None
         prev_page = page - 1 if page > 1 else None
