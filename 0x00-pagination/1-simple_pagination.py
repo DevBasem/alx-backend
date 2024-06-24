@@ -6,6 +6,7 @@ Pagination module for accessing and paginating a dataset of popular baby names.
 import csv
 from typing import List, Tuple
 
+
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
     """
     Returns a tuple of start index and end index
@@ -23,6 +24,7 @@ def index_range(page: int, page_size: int) -> Tuple[int, int]:
     start_index = (page - 1) * page_size
     end_index = page * page_size
     return (start_index, end_index)
+
 
 class Server:
     """
