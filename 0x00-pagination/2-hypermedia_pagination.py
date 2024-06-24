@@ -36,7 +36,7 @@ class Server(Server):
             "page_size must be an integer greater than 0"
 
         data_page = self.get_page(page, page_size)
-        total_pages = math.ceil(len(self.dataset()) / page_size)
+        total_pages = math.ceil(len(self.__dataset) / page_size)
 
         next_page = page + 1 if page < total_pages else None
         prev_page = page - 1 if page > 1 else None
