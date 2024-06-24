@@ -14,7 +14,11 @@ class Server(Server):
     Server class extended to support hypermedia pagination.
     """
 
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Union[int, List[List[str]]]]:
+    def get_hyper(
+        self,
+        page: int = 1,
+        page_size: int = 10
+    ) -> Dict[str, Union[int, List[List[str]]]]:
         """
         Returns a dictionary with hypermedia pagination information.
 
