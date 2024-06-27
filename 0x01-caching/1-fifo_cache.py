@@ -2,6 +2,7 @@
 """ FIFOCache module """
 from base_caching import BaseCaching
 
+
 class FIFOCache(BaseCaching):
     """ FIFOCache inherits from BaseCaching and implements FIFO caching """
 
