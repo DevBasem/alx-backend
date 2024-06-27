@@ -3,38 +3,33 @@
 2-lifo_cache module
 """
 from base_caching import BaseCaching
+from collections import OrderedDict
+
 
 class LIFOCache(BaseCaching):
+    """Represents an object that allows storing and
+    retrieving items from a dictionary with a LIFO
+    removal mechanism when the limit is reached.
     """
-    LIFOCache class inherits from BaseCaching and implements LIFO caching strategy
-    """
-
     def __init__(self):
-        """
-        Initialize LIFOCache
+        """Initializes the cache.
         """
         super().__init__()
+        self.cache_data = OrderedDict()
 
     def put(self, key, item):
-        """
-        Add an item in the cache
+        """Adds an item in the cache.
         """
         if key is None or item is None:
             return
-        
-        # Check if cache is full
-        if len(self.cache_data) >= self.MAX_ITEMS:
-            # Find the last item added (LIFO)
-            discarded_key, _ = next(iter(self.cache_data.items()))
-            del self.cache_data[discarded_key]
-            print(f"DISCARD: {discarded_key}")
-
+        if key not in self.cache_data:
+            if len(self.cache_data) + 1 > BaseCaching.MAX_ITEMS:
+                last_key, _ = self.cache_data.popitem(True)
+                print("DISCARD:", last_key)
         self.cache_data[key] = item
+        self.cache_data.move_to_end(key, last=True)
 
     def get(self, key):
+        """Retrieves an item by key.
         """
-        Get an item from the cache
-        """
-        if key is None or key not in self.cache_data:
-            return None
-        return self.cache_data[key]
+        return self.cache_data.get(key, None)
