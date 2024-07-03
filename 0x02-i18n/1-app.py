@@ -9,6 +9,14 @@ from flask_babel import Babel
 
 # Configuration class
 class Config:
+    """
+    Configuration class for Flask app.
+
+    Attributes:
+        LANGUAGES (list): available languages for localization.
+        BABEL_DEFAULT_LOCALE (str): for Babel, set to 'en'.
+        BABEL_DEFAULT_TIMEZONE (str): for Babel, set to 'UTC'.
+    """
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
@@ -23,6 +31,12 @@ babel = Babel(app)
 
 @app.route('/')
 def index():
+    """
+    Route handler for the '/' route.
+
+    Returns:
+        str: A simple "Hello, world!" message.
+    """
     return "Hello, world!"
 
 
