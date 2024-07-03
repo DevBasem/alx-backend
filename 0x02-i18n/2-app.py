@@ -1,55 +1,45 @@
 #!/usr/bin/env python3
-"""
-Flask app with Babel configuration and locale selection.
-"""
+'''Task 2: Get locale from request
+'''
 
-from flask import Flask, request, render_template
-from flask_babel import Babel, gettext
+from flask import Flask, render_template, request
+from flask_babel import Babel
 
 
-# Configuration class
 class Config:
-    """
-    Configuration class for Flask app.
+    '''Config class'''
 
-    Attributes:
-        LANGUAGES (list): List of available languages for localization.
-        BABEL_DEFAULT_LOCALE (str): Default locale for Babel, set to 'en'.
-        BABEL_DEFAULT_TIMEZONE (str): Default timezone for Babel, set to 'UTC'.
-    """
-    LANGUAGES = ['en', 'fr']
-    BABEL_DEFAULT_LOCALE = 'en'
-    BABEL_DEFAULT_TIMEZONE = 'UTC'
+    DEBUG = True
+    LANGUAGES = ["en", "fr"]
+    BABEL_DEFAULT_LOCALE = "en"
+    BABEL_DEFAULT_TIMEZONE = "UTC"
 
 
 app = Flask(__name__)
 app.config.from_object(Config)
-
-# Instantiate Babel object
+app.url_map.strict_slashes = False
 babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale():
-    """
-    Determine the user's locale based on the request's accepted languages.
+def get_locale() -> str:
+    """Retrieves the locale for a web page.
 
     Returns:
-        str: The best matching language code from the supported LANGUAGES.
+        str: best match
     """
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 @app.route('/')
-def index():
-    """
-    Route handler for the '/' route.
+def index() -> str:
+    '''default route
 
     Returns:
-        str: Rendered HTML template.
-    """
-    return render_template('2-index.html')
+        html: homepage
+    '''
+    return render_template("2-index.html")
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+if __name__ == "__main__":
+    app.run()
